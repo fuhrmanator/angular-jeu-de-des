@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { JeuDeDes } from '../model/jeDeDes';
-import { FormBuilder } from '@angular/forms';
+import { JeuDeDesService } from '../jeu-de-des/jeu-de-des.service';
 
 @Component({
   selector: 'app-jouer',
@@ -9,22 +8,14 @@ import { FormBuilder } from '@angular/forms';
 })
 export class JouerComponent implements OnInit {
 
-  formulaireNouveauJoueur = this.formBuilder.group({
-    nom: '',
-  })
-
   constructor(
-    private jeuDeDes: JeuDeDes,
-    private formBuilder: FormBuilder,
+    private jeuDeDesService: JeuDeDesService,
     ) {}
-
-  onSubmit(): void {
-    // TODO: appel à l'opération système pour nouveau joueur
-
-    console.info('Nouveau joueur', this.formulaireNouveauJoueur.value);
-  }
 
   ngOnInit(): void {
   }
 
+  demarrerJeu(nom: string) {
+    this.jeuDeDesService.demarrerJeu(nom);
+  }
 }

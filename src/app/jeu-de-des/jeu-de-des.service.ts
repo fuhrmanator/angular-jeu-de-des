@@ -10,11 +10,14 @@ export class JeuDeDesService {
   jeuDeDes: JeuDeDes = new JeuDeDes();
 
   constructor() {
-    this.jeuDeDes.demarrerJeu('Jean');
   }
   
   public get joueurs() {
     return this.jeuDeDes.joueurs;
+  }
+
+  public demarrerJeu(nom: string) {
+    this.jeuDeDes.demarrerJeu(nom);
   }
   
 }
