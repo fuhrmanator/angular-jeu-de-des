@@ -1,0 +1,13 @@
+<h3>Statistiques</h3>
+
+<div *ngFor="let joueur of joueurs">
+
+    <blockquote>
+        <h4>
+            <a [title]="joueur.nom + ' details'">
+                {{ joueur.nom }}
+            </a>
+        </h4>
+    </blockquote>
+
+</div>
