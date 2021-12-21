@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { joueurs } from '../joueurs';
+import { JeuDeDesService } from '../jeu-de-des/jeu-de-des.service';
+import { Joueur } from '../model/joueur';
 
 @Component({
   selector: 'app-statistiques',
@@ -8,11 +9,12 @@ import { joueurs } from '../joueurs';
 })
 export class StatistiquesComponent implements OnInit {
 
-  joueurs = joueurs;
+  joueurs: IterableIterator<Joueur> | undefined;
 
-  constructor() { }
+  constructor(private jeuDeDes: JeuDeDesService) { console.log('constructor of Statistiques') }
 
   ngOnInit(): void {
+    this.joueurs = this.jeuDeDes.joueurs;
   }
 
 }
