@@ -11,7 +11,7 @@ export class JeuDeDesService {
 
   constructor() {
   }
-  
+
   public get joueurs() {
     return this.jeuDeDes.joueurs;
   }
@@ -19,5 +19,9 @@ export class JeuDeDesService {
   public demarrerJeu(nom: string) {
     this.jeuDeDes.demarrerJeu(nom);
   }
-  
+
+  public lancer(nom: string) {
+    return this.jeuDeDes.jouer(nom);
+  }
+
 }
