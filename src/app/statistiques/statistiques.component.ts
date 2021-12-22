@@ -11,7 +11,7 @@ export class StatistiquesComponent implements OnInit {
 
   joueurs: IterableIterator<Joueur> | undefined;
 
-  constructor(private jeuDeDes: JeuDeDesService) { console.log('constructor of Statistiques') }
+  constructor(private jeuDeDes: JeuDeDesService) { }
 
   ngOnInit(): void {
     this.joueurs = this.jeuDeDes.joueurs;
