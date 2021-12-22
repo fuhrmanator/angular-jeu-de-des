@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { JeuDeDesService } from '../jeu-de-des/jeu-de-des.service';
+import { Joueur } from '../model/joueur';
 
 @Component({
   selector: 'app-jouer',
@@ -8,14 +9,20 @@ import { JeuDeDesService } from '../jeu-de-des/jeu-de-des.service';
 })
 export class JouerComponent implements OnInit {
 
+  model = new Joueur('Marie Antoinette');
+
+  submitted = false;
+
+  onSubmit() {
+    this.submitted = true;
+    this.jeuDeDesService.demarrerJeu(this.model.nom);
+  }
+
   constructor(
     private jeuDeDesService: JeuDeDesService,
-    ) {}
+    ) { }
 
   ngOnInit(): void {
   }
 
-  demarrerJeu(nom: string) {
-    this.jeuDeDesService.demarrerJeu(nom);
-  }
 }

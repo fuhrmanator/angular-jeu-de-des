@@ -7,6 +7,7 @@ import { JouerComponent } from './jouer/jouer.component';
 import { StatistiquesComponent } from './statistiques/statistiques.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { JeuDeDes } from './model/jeDeDes';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { JeuDeDes } from './model/jeDeDes';
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     RouterModule.forRoot([
       {path: 'jouer', component: JouerComponent},
       {path: 'statistiques', component: StatistiquesComponent},

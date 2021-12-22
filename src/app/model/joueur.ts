@@ -14,6 +14,8 @@ export class Joueur {
         return this._nom;
     }
 
+    set nom(n: string) { this._nom = n}
+
     /**
      * Assainir (sanitize) le nom.
      * Il serait préférable d'avoir un mutateur privé, mais TypeScript n'aime pas ça
