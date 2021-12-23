@@ -1,6 +1,6 @@
 <div class="container">
   <!-- Démarrer jeu avec nouveau joueur -->
-  <div [hidden]="submitted">
+  <div [hidden]="etatPage != PageState.New">
     <h2>Nouveau joueur</h2>
     <form (ngSubmit)="onSubmit()" #joueurForm="ngForm">
       <div class="form-group">
@@ -19,13 +19,15 @@
       </form>
     </div>
     <!-- Jouer -->
-    <div [hidden]="!submitted">
+    <div [hidden]="etatPage != PageState.Playing">
       <h2>Jouer</h2>
       {{model.nom}}
       <button (click)="lancer()">Lancer les dés</button>
       <div [hidden]="resultat.message==''">
         Résultat: <span class="de">{{desUnicode[resultat.v1-1]}}</span> + <span class="de">{{desUnicode[resultat.v2-1]}}</span> = {{resultat.somme}} : {{resultat.message}}
       </div>
-
+    </div>
+    <div [hidden]="!erreur" class="alert alert-danger alert-dismissible fade show">
+      {{erreur}}
     </div>
 </div>

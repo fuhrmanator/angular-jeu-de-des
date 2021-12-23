@@ -1,7 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { JeuDeDesService } from '../jeu-de-des/jeu-de-des.service';
+import { AlreadyExistsError } from '../model/errors/alreadyExistsError';
 import { Joueur } from '../model/joueur';
 import { ResultatLancer } from '../model/resultatLancer';
+
+
+enum PageState {
+  New = 1,
+  Playing
+}
 
 @Component({
   selector: 'app-jouer',
@@ -10,9 +17,17 @@ import { ResultatLancer } from '../model/resultatLancer';
 })
 
 export class JouerComponent implements OnInit {
+  // <!-- beurk https://stackoverflow.com/a/48431641/1168342
+  static readonly PageState = PageState;
+  readonly PageState = JouerComponent.PageState;
+  // beurk -->
 
+  etatPage: PageState = PageState.New;
+
+  erreur = '';
   readonly desUnicode = '⚀⚁⚂⚃⚄⚅';
 
+  // champs du formulaire agissent sur cet objet
   model = new Joueur('Marie Antoinette');
 
   submitted = false;
@@ -21,7 +36,16 @@ export class JouerComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
-    this.jeuDeDesService.demarrerJeu(this.model.nom);
+    try {
+      this.jeuDeDesService.demarrerJeu(this.model.nom);
+      this.etatPage = PageState.Playing;
+    } catch (error) {
+      console.log(error);
+      if (error instanceof AlreadyExistsError)
+        this.erreur = error.message;
+      else
+        this.erreur = 'Erreur inconnue.';
+    }
   }
 
   constructor(
@@ -32,7 +56,12 @@ export class JouerComponent implements OnInit {
   }
 
   lancer() {
-    this.resultat = this.jeuDeDesService.lancer(this.model.nom);
+    try {
+      this.resultat = this.jeuDeDesService.lancer(this.model.nom);
+    } catch (error) {
+      this.erreur = 'Erreur inconnue.';
+    }
   }
+
 
 }
