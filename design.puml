@@ -1,0 +1,100 @@
+@startuml
+class AppComponent {
+    +title: string
+}
+abstract class default extends Error {
+    +{abstract} code: number
+}
+class AlreadyExistsError extends AbstractError {
+    +code: 400
+}
+class De {
+    -_valeur: number
+    +brasser(): void
+    +valeur: number
+}
+class Joueur {
+    -_nom: string
+    -_nbLancers: number
+    -_nbLancersGagnes: number
+    +nom: string
+    +nom: string
+    -assainirNom(nom: string): string
+    +lancers: number
+    +lancersGagnes: number
+    +lancer(): void
+    +gagner(): void
+    +toJSON(): { nom: string; lancers: number; lancersGagnes: number; }
+}
+class NotFoundError extends AbstractError {
+    +code: 404
+}
+interface ResultatLancer {
+    +nom: string
+    +somme: number
+    +lancers: number
+    +reussites: number
+    +v1: number
+    +v2: number
+    +message: string
+}
+class JeuDeDes {
+    -_joueurs: Map<string, Joueur>
+    -_d1: De
+    -_d2: De
+    +demarrerJeu(nom: string): string
+    +asyncDemarrerJeu(nom: string): Promise<string>
+    +jouer(nom: string): ResultatLancer
+    +terminerJeu(nom: string): string
+    +brasser(): number
+    +joueurs: IterableIterator<Joueur>
+}
+class JeuDeDesService {
+    +jeuDeDes: JeuDeDes
+    +joueurs: IterableIterator<Joueur>
+    +demarrerJeu(nom: string): Observable<void>
+    +lancer(nom: string): ResultatLancer
+}
+enum PageState {
+    New
+    Playing
+}
+class JouerComponent implements OnInit {
+    +PageState: typeof PageState
+    +etatPage: PageState
+    +erreur: string
+    +desUnicode: "⚀⚁⚂⚃⚄⚅"
+    +model: Joueur
+    +submitted: boolean
+    +resultat: ResultatLancer
+    +onSubmit(): void
+    -jeuDeDesService: JeuDeDesService
+    +ngOnInit(): void
+    +lancer(): void
+    +{static} PageState: typeof PageState
+}
+class StatistiquesComponent implements OnInit {
+    +joueurs: IterableIterator<Joueur> | undefined
+    -jeuDeDes: JeuDeDesService
+    +ngOnInit(): void
+}
+class PageNotFoundComponent implements OnInit {
+    +ngOnInit(): void
+}
+class AppModule {
+    +jeuDeDes: JeuDeDes
+}
+JeuDeDes --> "1" Joueur
+JeuDeDes --> "1" De
+JeuDeDes --> "1" ResultatLancer
+JeuDeDesService --> "1" JeuDeDes
+JeuDeDesService --> "1" Joueur
+JeuDeDesService --> "1" ResultatLancer
+JouerComponent --> "1" PageState
+JouerComponent --> "1" Joueur
+JouerComponent --> "1" ResultatLancer
+JouerComponent --> "1" JeuDeDesService
+StatistiquesComponent --> "1" Joueur
+StatistiquesComponent --> "1" JeuDeDesService
+AppModule --> "1" JeuDeDes
+@enduml
