@@ -27,7 +27,7 @@
         Résultat: <span class="de">{{desUnicode[resultat.v1-1]}}</span> + <span class="de">{{desUnicode[resultat.v2-1]}}</span> = {{resultat.somme}} : {{resultat.message}}
       </div>
     </div>
-    <div [hidden]="!erreur" class="alert alert-danger alert-dismissible fade show">
+    <div class="alert alert-danger" *ngIf="erreur">
       {{erreur}}
     </div>
 </div>

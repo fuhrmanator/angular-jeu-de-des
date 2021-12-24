@@ -1,0 +1,104 @@
+@startuml
+skinparam style strictuml
+hide empty members
+' class AppComponent {
+'     +title: string
+' }
+' abstract class default extends Error {
+'     +{abstract} code: number
+' }
+class Model.AlreadyExistsError extends Model.AbstractError {
+}
+' class Model.Die {
+'     -_valeur: number
+'     +brasser(): void
+'     +valeur: number
+' }
+class Model.Player {
+    -_name: string
+    ...()
+}
+' class Model.NotFoundError extends Model.AbstractError {
+'     +code: 404
+' }
+class Model.Game {
+    -_players: Array<Player>
+    +startGame(name: string): void
+    ...()
+}
+class GameService {
+    +game: Model.Game
+    +startGame(name: string): Observable<void>
+    ...()
+}
+' enum PageState {
+'     New
+'     Playing
+' }
+
+' class PlayComponent implements OnInit {
+class PlayComponent {
+    ' +PageState: typeof PageState
+    ' +etatPage: PageState
+    +model: Player
+    +submitted: boolean
+    ' +resultat: ResultatLancer
+    +onSubmit(): void
+    -gameService: GameService
+    ' +ngOnInit(): void
+    ' +lancer(): void
+    ' +{static} PageState: typeof PageState
+}
+
+' class StatistiquesComponent implements OnInit {
+'     +joueurs: IterableIterator<Player> | undefined
+'     -Model.Game: GameService
+'     +ngOnInit(): void
+' }
+
+' class PageNotFoundComponent implements OnInit {
+'     +ngOnInit(): void
+' }
+
+' class AppModule {
+'     +Model.Game: Model.Game
+' }
+Model.Game --> "1" Model.Player
+' Model.Game --> "1" Model.Die
+' Model.Game --> "1" ResultatLancer
+GameService --> "1" Model.Game
+GameService --> "1" Model.Player
+' GameService --> "1" ResultatLancer
+' PlayComponent --> "1" PageState
+PlayComponent --> "1" Model.Player
+' PlayComponent --> "1" ResultatLancer
+PlayComponent --> "1" GameService
+' StatistiquesComponent --> "1" Model.Player
+' StatistiquesComponent --> "1" GameService
+' AppModule --> "1" Model.Game
+
+note right of GameService::startGame
+ Service methods that call Model methods
+ that throw exceptions must return
+ ""Observable<void>"" for them to be
+ handlable in a Component
+end note
+
+note left of PlayComponent::onSubmit
+  onSubmit() {
+    // ...
+    this.gameService.startGame(this.model.name)
+      .subscribe({
+        error: (error) => {
+          console.log(`startGame failed: ${error.message}`);
+        },
+        next: () => {
+          console.log("startGame success!");
+          // ...
+        },
+      })
+    // ...
+  }
+end note
+
+@enduml
