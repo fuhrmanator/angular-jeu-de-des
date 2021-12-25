@@ -40,6 +40,10 @@ export class Joueur {
         return this._nbLancersGagnes;
     }
 
+    get ratio() {
+      return this._nbLancersGagnes / this._nbLancers
+    }
+
     public lancer() {
         this._nbLancers++;
     }

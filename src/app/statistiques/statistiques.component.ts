@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { JeuDeDesService } from '../jeu-de-des/jeu-de-des.service';
 import { Joueur } from '../model/joueur';
-import {MatSort, Sort} from '@angular/material/sort';
+import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
@@ -11,9 +11,10 @@ import { MatTableDataSource } from '@angular/material/table';
 })
 export class StatistiquesComponent implements OnInit, AfterViewInit {
 
-  displayedColumns: string[] = ['nom', 'lancers', 'lancersGagnes']
+  // nom de chaque colonne correspond au getter de l'objet
+  displayedColumns: string[] = ['nom', 'lancers', 'lancersGagnes', 'ratio']
   joueurs: IterableIterator<Joueur> | undefined;
-  dataSource = new MatTableDataSource(Array.from(this.jeuDeDes.joueurs));
+//  dataSource = new MatTableDataSource(Array.from(this.jeuDeDes.joueurs));
 
   constructor(private jeuDeDes: JeuDeDesService) { }
 
@@ -24,7 +25,7 @@ export class StatistiquesComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.dataSource.sort = this.sort;
+//    this.dataSource.sort = this.sort;
   }
 
 }
