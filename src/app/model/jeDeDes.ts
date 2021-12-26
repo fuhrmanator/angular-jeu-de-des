@@ -96,4 +96,8 @@ export class JeuDeDes {
     return this._joueurs.values();
   }
 
+  public getJoueur(id: string) {
+    return this._joueurs.get(id);
+  }
+
 }

@@ -1,31 +1,36 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 import { JeuDeDesService } from '../jeu-de-des/jeu-de-des.service';
 import { Joueur } from '../model/joueur';
 import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-statistiques',
   templateUrl: './statistiques.component.html',
   styleUrls: ['./statistiques.component.css']
 })
-export class StatistiquesComponent implements OnInit, AfterViewInit {
+export class StatistiquesComponent implements OnInit {
 
-  // nom de chaque colonne correspond au getter de l'objet
-  displayedColumns: string[] = ['nom', 'lancers', 'lancersGagnes', 'ratio']
-  joueurs: IterableIterator<Joueur> | undefined;
-//  dataSource = new MatTableDataSource(Array.from(this.jeuDeDes.joueurs));
+  joueurs!: IterableIterator<Joueur>;
+  joueurs$!: Observable<Joueur[]>;
+  selectedId = '';
 
-  constructor(private jeuDeDes: JeuDeDesService) { }
+  constructor(private jeuDeDes: JeuDeDesService, private route: ActivatedRoute) { }
 
   @ViewChild(MatSort) sort: MatSort = new MatSort;
 
   ngOnInit(): void {
+    this.joueurs$ = this.route.paramMap.pipe(
+      switchMap(params => {
+        let nom = '';
+        if (params.get('nom') != null) nom = params.get('nom')!;
+        this.selectedId = nom;
+        return this.jeuDeDes.getJoueurs();
+      })
+    )
     this.joueurs = this.jeuDeDes.joueurs;
-  }
-
-  ngAfterViewInit() {
-//    this.dataSource.sort = this.sort;
   }
 
 }

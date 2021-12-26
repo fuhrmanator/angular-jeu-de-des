@@ -1,33 +1,15 @@
 <div class="container">
-  <!-- Démarrer jeu avec nouveau joueur -->
-  <div [hidden]="etatPage != PageState.New">
-    <h2>Nouveau joueur</h2>
-    <form (ngSubmit)="onSubmit()" #joueurForm="ngForm">
-      <div class="form-group">
-        <label for="nom">Nom</label>
-        <input type="text" class="form-control" id="nom"
-               required
-               [(ngModel)]="model.nom" name="nom"
-               #nom="ngModel">
-        <div [hidden]="nom.valid || nom.pristine"
-             class="alert alert-danger">
-          Nom est obligatoire
-        </div>
-      </div>
+  <ng-container *ngIf="( joueur$ | async) as joueur">
+    <h2>Jouer: {{joueur.nom}}</h2>
+  </ng-container>
 
-      <button type="submit" class="btn btn-success" [disabled]="!joueurForm.form.valid">Submit</button>
-      </form>
-    </div>
-    <!-- Jouer -->
-    <div [hidden]="etatPage != PageState.Playing">
-      <h2>Jouer</h2>
-      {{model.nom}}
-      <button (click)="lancer()">Lancer les dés</button>
-      <div [hidden]="resultat.message==''">
-        Résultat: <span class="de">{{desUnicode[resultat.v1-1]}}</span> + <span class="de">{{desUnicode[resultat.v2-1]}}</span> = {{resultat.somme}} : {{resultat.message}}
-      </div>
-    </div>
-    <div class="alert alert-danger" *ngIf="erreur">
-      {{erreur}}
-    </div>
+  <!-- Jouer -->
+  <button (click)="lancer()">Lancer les dés</button>
+  <div [hidden]="resultat.message==''">
+    Résultat: <span class="de">{{desUnicode[resultat.v1-1]}}</span> + <span
+      class="de">{{desUnicode[resultat.v2-1]}}</span> = {{resultat.somme}} : {{resultat.message}}
+  </div>
+</div>
+<div class="alert alert-danger" *ngIf="erreur">
+  {{erreur}}
 </div>

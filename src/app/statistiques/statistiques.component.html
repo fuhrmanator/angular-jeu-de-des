@@ -7,14 +7,17 @@
     <th>Lancers gagnés</th>
     <th>Ratio</th>
   </tr>
-  <tr *ngFor="let joueur of joueurs">
-    <td>{{joueur.nom}}</td>
+  <tr *ngFor="let joueur of joueurs$ | async" [class.selected]="joueur.nom === selectedId">
+    <td>
+      <a [routerLink]="['/jouer', {nom: joueur.nom}]">
+        <span class="badge">{{joueur.nom}}</span>
+      </a>
+    </td>
     <td>{{joueur.lancers}}</td>
     <td>{{joueur.lancersGagnes}}</td>
     <td>{{joueur.ratio}}</td>
   </tr>
 </table>
-
 
 <!-- <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
   <ng-container matColumnDef="nom">

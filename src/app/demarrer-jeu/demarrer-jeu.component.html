@@ -1,0 +1,19 @@
+<div *ngIf="!submitted" class="container">
+  <!-- Démarrer jeu avec nouveau joueur -->
+  <h2>Nouveau joueur</h2>
+  <form (ngSubmit)="onSubmit()" #joueurForm="ngForm">
+    <div class="form-group">
+      <label for="nom">Nom</label>
+      <input type="text" class="form-control" id="nom" required [(ngModel)]="joueur.nom" name="nom" #nom="ngModel">
+      <div [hidden]="nom.valid || nom.pristine" class="alert alert-danger">
+        Nom est obligatoire
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-success" [disabled]="!joueurForm.form.valid">Submit</button>
+  </form>
+</div>
+
+<div class="alert alert-danger" *ngIf="erreur">
+  {{erreur}}
+</div>

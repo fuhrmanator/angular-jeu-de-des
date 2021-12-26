@@ -1,13 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { JeuDeDesService } from '../jeu-de-des/jeu-de-des.service';
 import { Joueur } from '../model/joueur';
 import { ResultatLancer } from '../model/resultatLancer';
-
-
-enum PageState {
-  New = 1,
-  Playing
-}
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-jouer',
@@ -16,51 +12,36 @@ enum PageState {
 })
 
 export class JouerComponent implements OnInit {
-  // <!-- beurk pour enum https://stackoverflow.com/a/48431641/1168342
-  static readonly PageState = PageState;
-  readonly PageState = JouerComponent.PageState;
-  // beurk -->
 
-  etatPage: PageState = PageState.New;
+  //@Input() joueur!: Joueur;
+  joueur$!: Observable<Joueur>;
 
   erreur = '';
   readonly desUnicode = '⚀⚁⚂⚃⚄⚅';
 
-  // champs du formulaire agissent sur cet objet
-  model = new Joueur('Marie Antoinette');
-
-  submitted = false;
-
   resultat: ResultatLancer = { nom: "", lancers: 0, reussites: 0, v1: 0, v2: 0, somme: 0, message: "" };
-
-  onSubmit() {
-    this.erreur = '';
-    this.submitted = true;
-    this.jeuDeDesService.demarrerJeu(this.model.nom)
-      .subscribe({
-        // complete: () => {},
-        error: (error) => {
-          this.erreur = error.message;
-          console.log(`demarrerJeu échec: ${error.message}`);
-        },
-        next: () => {
-          console.log("demarrerJeu succès");
-          this.etatPage = PageState.Playing;
-        },
-      })
-  }
 
   constructor(
     private jeuDeDesService: JeuDeDesService,
-  ) { }
+    private route: ActivatedRoute,
+    private router: Router
+    ) {}
 
   ngOnInit(): void {
+    const joueurId = this.route.snapshot.paramMap.get('nom')!;
+    this.joueur$ = this.jeuDeDesService.getJoueur(joueurId);
   }
 
   lancer() {
     try {
-      this.resultat = this.jeuDeDesService.lancer(this.model.nom);
+      this.joueur$.subscribe({
+        next: (joueur) => {
+          this.resultat = this.jeuDeDesService.lancer(joueur.nom);
+        },
+        error: (err) => { console.log(err)}
+      })
     } catch (error) {
+      console.log(error);
       this.erreur = 'Erreur inconnue.';
     }
   }
