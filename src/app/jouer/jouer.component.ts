@@ -13,8 +13,8 @@ import { Observable } from 'rxjs';
 
 export class JouerComponent implements OnInit {
 
-  //@Input() joueur!: Joueur;
   joueur$!: Observable<Joueur>;
+  joueurs$!: Observable<Joueur[]>;
 
   erreur = '';
   readonly desUnicode = '⚀⚁⚂⚃⚄⚅';
@@ -30,9 +30,10 @@ export class JouerComponent implements OnInit {
   ngOnInit(): void {
     const joueurId = this.route.snapshot.paramMap.get('nom')!;
     this.joueur$ = this.jeuDeDesService.getJoueur(joueurId);
+    this.joueurs$ = this.jeuDeDesService.getJoueurs();
   }
 
-  lancer() {
+  lancer(event: Event) {
     try {
       this.joueur$.subscribe({
         next: (joueur) => {
@@ -46,5 +47,9 @@ export class JouerComponent implements OnInit {
     }
   }
 
+  // click sur bouton pour choisir un joueur
+  clickJoueur(nom: string) {
+    this.joueur$ = this.jeuDeDesService.getJoueur(nom);
+  }
 
 }

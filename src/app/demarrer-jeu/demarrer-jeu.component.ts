@@ -26,6 +26,7 @@ export class DemarrerJeuComponent implements OnInit {
         error: (error: { message: string; }) => {
           this.erreur = error.message;
           console.log(`demarrerJeu échec: ${error.message}`);
+          this.submitted = false;
         },
         next: () => {
           console.log("demarrerJeu succès");

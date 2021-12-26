@@ -1,15 +1,38 @@
 <div class="container">
-  <ng-container *ngIf="( joueur$ | async) as joueur">
-    <h2>Jouer: {{joueur.nom}}</h2>
-  </ng-container>
 
-  <!-- Jouer -->
-  <button (click)="lancer()">Lancer les dés</button>
-  <div [hidden]="resultat.message==''">
-    Résultat: <span class="de">{{desUnicode[resultat.v1-1]}}</span> + <span
-      class="de">{{desUnicode[resultat.v2-1]}}</span> = {{resultat.somme}} : {{resultat.message}}
+  <!-- if joueurs -->
+  <div *ngIf="(joueurs$ | async) as joueurs">
+    <div *ngIf="joueurs.length">
+      <!-- if joueur choisi -->
+      <div *ngIf="( joueur$ | async) as joueur">
+        <h2>Jouer: {{joueur.nom}}</h2>
+        <!-- Jouer -->
+        <button (click)="lancer($event)">Lancer les dés</button>
+        <div [hidden]="resultat.message==''">
+          Résultat: <span class="de">{{desUnicode[resultat.v1-1]}}</span> + <span
+            class="de">{{desUnicode[resultat.v2-1]}}</span> = {{resultat.somme}} : {{resultat.message}}
+        </div>
+      </div>
+      <!-- if aucun joueur choisi -->
+      <div *ngIf="!( joueur$ | async)">
+        <!-- transformer Observable en objet -->
+        <div *ngIf="(joueurs$ | async) as joueurs">
+          <div *ngIf="joueurs.length">
+            <h3>Qui va jouer?</h3>
+            <div *ngFor="let joueur of joueurs">
+              <button (click)="clickJoueur(joueur.nom)">{{joueur.nom}}</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- aucun joueurs dans la liste -->
+    <div class="alert alert-danger" *ngIf="!joueurs.length">
+      Il faut démarrer une partie de jeu avec au moins un joueur pour jouer (démarrer jeu).
+    </div>
+  </div> <!-- if joueurs -->
+  <!-- if ! joueurs -->
+  <div class="alert alert-danger" *ngIf="erreur">
+    {{erreur}}
   </div>
-</div>
-<div class="alert alert-danger" *ngIf="erreur">
-  {{erreur}}
 </div>

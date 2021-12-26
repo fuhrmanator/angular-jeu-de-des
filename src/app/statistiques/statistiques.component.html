@@ -1,41 +1,26 @@
 <h3>Statistiques</h3>
 
-<table width="100%">
-  <tr>
-    <th>Joueur</th>
-    <th>Lancers</th>
-    <th>Lancers gagnés</th>
-    <th>Ratio</th>
-  </tr>
-  <tr *ngFor="let joueur of joueurs$ | async" [class.selected]="joueur.nom === selectedId">
-    <td>
-      <a [routerLink]="['/jouer', {nom: joueur.nom}]">
-        <span class="badge">{{joueur.nom}}</span>
-      </a>
-    </td>
-    <td>{{joueur.lancers}}</td>
-    <td>{{joueur.lancersGagnes}}</td>
-    <td>{{joueur.ratio}}</td>
-  </tr>
-</table>
-
-<!-- <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
-  <ng-container matColumnDef="nom">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> Nom </th>
-    <td mat-cell *matCellDef="let joueur"> {{joueur.nom}} </td>
-  </ng-container>
-  <ng-container matColumnDef="lancers">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> Lancers </th>
-    <td mat-cell *matCellDef="let joueur"> {{joueur.lancers}} </td>
-  </ng-container>
-  <ng-container matColumnDef="lancersGagnes">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> Lancers gagnés </th>
-    <td mat-cell *matCellDef="let joueur"> {{joueur.lancersGagnes}} </td>
-  </ng-container>
-  <ng-container matColumnDef="ratio">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> Ratio </th>
-    <td mat-cell *matCellDef="let joueur"> {{joueur.ratio}} </td>
-  </ng-container>
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-</table> -->
+<div *ngIf="(joueurs$ | async) as joueurs">
+  <table *ngIf="joueurs.length" width="100%">
+    <tr>
+      <th>Joueur</th>
+      <th>Lancers</th>
+      <th>Lancers gagnés</th>
+      <th>Ratio</th>
+    </tr>
+    <tr *ngFor="let joueur of joueurs$ | async" [class.selected]="joueur.nom === selectedId">
+      <td>
+        <a [routerLink]="['/jouer', {nom: joueur.nom}]">
+          <span class="badge">{{joueur.nom}}</span>
+        </a>
+      </td>
+      <td>{{joueur.lancers}}</td>
+      <td>{{joueur.lancersGagnes}}</td>
+      <td>{{joueur.ratio}}</td>
+    </tr>
+  </table>
+  <!-- aucun joueurs dans la liste -->
+  <div class="alert alert-danger" *ngIf="!joueurs.length">
+    Il faut démarrer une partie de jeu avec au moins un joueur pour voir les statistiques.
+  </div>
+</div>
