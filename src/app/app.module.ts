@@ -7,7 +7,7 @@ import { DemarrerJeuComponent } from './demarrer-jeu/demarrer-jeu.component';
 import { JouerComponent } from './jouer/jouer.component';
 import { StatistiquesComponent } from './statistiques/statistiques.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { JeuDeDes } from './model/jeDeDes';
+import { JeuDeDes } from './model/jeuDeDes';
 import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTableModule } from '@angular/material/table';
