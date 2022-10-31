@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { FormsModule } from '@angular/forms';
 import { DemarrerJeuComponent } from './demarrer-jeu.component';
 
 describe('DemarrerJeuComponent', () => {
@@ -8,6 +8,7 @@ describe('DemarrerJeuComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      imports: [ FormsModule ],
       declarations: [ DemarrerJeuComponent ]
     })
     .compileComponents();
