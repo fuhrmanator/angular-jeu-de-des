@@ -104,7 +104,6 @@
       }
     }
   },
-  "defaultProject": "angular-jeu-de-des",
   "cli": {
     "analytics": false
   }
