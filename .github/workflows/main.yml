@@ -10,8 +10,10 @@ jobs:
         with:
           node-version: 20
 
-      - name: Setup
-        run: npm ci
+      - name: Install dependencies
+        run: |
+          # npm ci command "broke" after migrating to NX
+          npm i
 
       - name: Test
         run: |
