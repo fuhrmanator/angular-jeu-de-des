@@ -1,4 +1,7 @@
 # AngularJeuDeDes
+[![CI Angular app through GitHub Actions](https://github.com/fuhrmanator/angular-jeu-de-des/actions/workflows/main.yml/badge.svg)](https://github.com/fuhrmanator/angular-jeu-de-des/actions/workflows/main.yml)
+
+Prototype du [squelette JeuDeDés pour LOG210](https://github.com/profcfuhrmanets/log210-jeu-de-des-node-express-ts) avec Angular (sans REST ni base de données). 
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.1.2.
 
